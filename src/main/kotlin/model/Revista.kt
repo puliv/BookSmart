@@ -1,12 +1,18 @@
 package org.example.model
 
-class Revista: Recurso() {
+class Revista : Recurso() {
     init {
         categoria = "Revista"
     }
-    var frecuencia: String = ""; //Semanal o mensual
 
-    override fun mostrarInfo(){
-        print("titulo: $titulo, /n autor: $autor, /n precio base: $precioBase, /n categoria: $categoria, /n año publicacion: $anioPublicacion, frecuencia: $frecuencia")
+    var frecuencia: String = ""; //frecuencia de prestamo semanal o mensual
+
+    override fun mostrarInfo() {
+        println("Titulo: $titulo" +
+                "\nAutor: $autor" +
+                "\nPrecio: $$precioBase" +
+                "\nCategoria: $categoria" +
+                "\nAnio publicacion: $anioPublicacion" +
+                "\nFrecuencia prestamo: $frecuencia")
     }
 }

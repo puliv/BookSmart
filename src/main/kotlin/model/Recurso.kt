@@ -5,7 +5,7 @@ abstract class Recurso {
     var autor: String = "";
     var precioBase: Int = 0;
     var categoria: String = "";
-    var anioPublicacion: String = "";
+    var anioPublicacion: Int = 0;
 
     abstract fun mostrarInfo();
 }

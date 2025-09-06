@@ -2,13 +2,18 @@ package org.example.model
 
 import kotlin.String
 
-class Libro: Recurso() {
+class Libro : Recurso() {
     init {
         categoria = "Libro"
     }
-    var estadoLibro: String = "" //nuevo o usado
+    var estadoLibro: Boolean = false //nuevo o usado
 
     override fun mostrarInfo() {
-        print("titulo: $titulo, /n autor: $autor, /n precio base: $precioBase, /n categoria: $categoria, /n año publicacion: $anioPublicacion, estado libro: $estadoLibro")
+    println("Titulo: $titulo" +
+            "\nAutor: $autor" +
+            "\nPrecio: $$precioBase" +
+            "\nCategoria: $categoria" +
+            "\nAnio publicacion: $anioPublicacion" +
+            "\nNuevo: $estadoLibro")
     }
 }
