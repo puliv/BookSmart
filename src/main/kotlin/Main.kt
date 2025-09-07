@@ -1,4 +1,5 @@
 package org.example
+
 import org.example.model.Recurso
 import org.example.service.GestorBiblioteca
 
@@ -12,13 +13,17 @@ fun main() {
 
     gestorBiblioteca.cargarCatalogo(listaRecursos)
     gestorBiblioteca.mostrarCatalogo(listaRecursos)
-    gestorBiblioteca.procesarPrestamo(listaSeleccion)
+    gestorBiblioteca.seleccionRecursos(listaSeleccion)
 
     val tipoUsuario = gestorBiblioteca.obtenerTipoUsuario()
-    val totalPrestamo = gestorBiblioteca.obtenerSubTotalPrestamo(listaSeleccion, listaRecursos)
+
+
+
+    val subTotalPrestamo = gestorBiblioteca.obtenerSubTotalPrestamo(listaSeleccion, listaRecursos)
     val descuento = gestorBiblioteca.aplicarDescuentos(tipoUsuario)
+    val multa = gestorBiblioteca.fechaLimiteYMulta()
 
-
+//    gestorBiblioteca.generarVoucherPrestamo(tipoUsuario, subTotalPrestamo, descuento, multa)
 }
 
 

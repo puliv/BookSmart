@@ -1,45 +1,52 @@
 package org.example.service
+
 import org.example.model.Libro
 import org.example.model.Recurso
 import org.example.model.Revista
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
+import java.time.temporal.ChronoUnit
+import java.time.temporal.Temporal
 
 class GestorBiblioteca {
     //Objetivo 1: Gestionar un catálogo de recursos (libros y revistas)
     fun cargarCatalogo(listaRecursos: MutableList<Recurso>) {
-        val recurso1 = Libro();
-        recurso1.titulo = "El Principito";
-        recurso1.autor = "Antoine...";
-        recurso1.precioBase = 4990;
-        recurso1.categoria = "Literatura Infantil";
-        recurso1.anioPublicacion = 1943;
-        recurso1.estadoLibro = false;
+        val recurso1 = Libro()
+        recurso1.titulo = "El Principito"
+        recurso1.autor = "Antoine..."
+        recurso1.precioBase = 4990
+        recurso1.categoria = "Literatura Infantil"
+        recurso1.anioPublicacion = 1943
+        recurso1.estadoLibro = false
 
-        val recurso2 = Libro();
-        recurso2.titulo = "Cien Anios de Soledad";
-        recurso2.autor = "Gabriel Garcia Marquez";
-        recurso2.precioBase = 9990;
-        recurso2.categoria = "Novela";
-        recurso2.anioPublicacion = 1967;
-        recurso2.estadoLibro = true;
+        val recurso2 = Libro()
+        recurso2.titulo = "Cien Anios de Soledad"
+        recurso2.autor = "Gabriel Garcia Marquez"
+        recurso2.precioBase = 9990
+        recurso2.categoria = "Novela"
+        recurso2.anioPublicacion = 1967
+        recurso2.estadoLibro = true
 
-        val recurso3 = Revista();
-        recurso3.titulo = "National Geographic";
+        val recurso3 = Revista()
+        recurso3.titulo = "National Geographic"
         recurso3.autor = "Editorial NG"
-        recurso3.precioBase = 2490;
-        recurso3.frecuencia = "Mensual";
-        recurso3.anioPublicacion = 2025;
+        recurso3.precioBase = 2490
+        recurso3.frecuencia = "Mensual"
+        recurso3.anioPublicacion = 2025
 
-        val recurso4 = Revista();
-        recurso4.titulo = "Muy Interesante";
+        val recurso4 = Revista()
+        recurso4.titulo = "Muy Interesante"
         recurso4.autor = "Editorial MY"
-        recurso4.precioBase = 1490;
-        recurso4.frecuencia = "Semanal";
-        recurso4.anioPublicacion = 2025;
+        recurso4.precioBase = 1490
+        recurso4.frecuencia = "Semanal"
+        recurso4.anioPublicacion = 2025
 
-        listaRecursos.add(recurso1);
-        listaRecursos.add(recurso2);
-        listaRecursos.add(recurso3);
-        listaRecursos.add(recurso4);
+        listaRecursos.add(recurso1)
+        listaRecursos.add(recurso2)
+        listaRecursos.add(recurso3)
+        listaRecursos.add(recurso4)
     }
 
     //Mostrar catalogo
@@ -55,12 +62,53 @@ class GestorBiblioteca {
     }
 
     //Objetivo 2: Procesar préstamos con fechas límite y posibles multas.
-    fun procesarPrestamo(listaSeleccion: MutableList<Int>) {
+    fun seleccionRecursos(listaSeleccion: MutableList<Int>) {
         println("---------Selecciona recursos---------")
         val seleccionRecurso = readln()
         val arregloSeleccion = seleccionRecurso.split(",")
 
         arregloSeleccion.forEach { s -> listaSeleccion.add(s.toInt()) }
+    }
+
+    //Validar formato de fecha
+    fun esFechaValida(fecha: String, formato: String = "dd-MM-yyyy"): Boolean {
+        return try {
+            val formatter = DateTimeFormatter.ofPattern(formato)
+            LocalDate.parse(fecha, formatter)
+            true
+        } catch (e: DateTimeParseException) {
+            false
+        }
+    }
+
+    fun fechaLimiteYMulta(): Long {
+        println("---------Ingresa fecha de devolucion---------")
+        val formato = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+        var fecha: LocalDate? = null
+        val hoy: LocalDate = LocalDate.now()
+        var multa: Long = 0
+
+        while (fecha == null) {
+            println("formato: (dd-mm-aaaa)")
+            val input = readln()
+
+            if (esFechaValida(input)) {
+                val fechaIngresada = LocalDate.parse(input, formato)
+                fecha = fechaIngresada
+                val fechaDespuesDeHoy = fechaIngresada.isAfter(LocalDate.now())
+                val fechaEsHoy = fechaIngresada.isEqual(LocalDate.now())
+
+                if (fechaDespuesDeHoy || fechaEsHoy) {
+                    println("Lo devolviste a tiempo, no tienes multas")
+                }
+                else {
+                    val diferencia = ChronoUnit.DAYS.between(hoy, fechaIngresada)
+                    multa = diferencia * -500
+                    println("Hubo un retraso de $diferencia dias, lo que significa un recargo de: $multa pesos")
+                }
+            }
+        }
+        return multa
     }
 
     //Objetivo 3: Aplicar beneficios y descuentos según el tipo de usuario.
@@ -87,9 +135,7 @@ class GestorBiblioteca {
     fun obtenerSubTotalPrestamo(listaSeleccion: MutableList<Int>, listaRecursos: MutableList<Recurso>): Int {
         var subtotal = 0
         println("---------Total prestamo---------")
-        println(listaSeleccion)
 
-        val cantidadSeleccion = listaRecursos.size
         listaRecursos.withIndex().forEach { (index, item) ->
             val idx = index + 1
             listaSeleccion.forEach { i ->
@@ -98,25 +144,30 @@ class GestorBiblioteca {
                 }
             }
         }
-//        println("total $total")
+        println("$$subtotal")
         return subtotal
     }
 
     fun aplicarDescuentos(tipoUsuario: Int?): Int {
-        var descuento : Int = 0
+        var descuento = 0
         when (tipoUsuario) {
-            1 -> descuento =  0
-            2 -> descuento =  10
-            3 -> descuento =  15
+            1 -> descuento = 0
+            2 -> descuento = 10
+            3 -> descuento = 15
         }
         return descuento
     }
 
     //Objetivo 4: Simular el proceso de préstamo y devolución de manera asíncrona.
+    fun generarVoucherPrestamo(tipoUsuario: Int, subTotalPrestamo: Int, descuento: Int, multa: Int): String {
+
+
+        return ""
+    }
     //Objetivo 5: Generar reportes de uso y estadísticas mediante operaciones funcionales.
 
 }
 
 
 //cargo catalogo, lo muestro, usuario selecciona, especifico usuario,
-//cargo total seleecion, aplico descuentos y multas
+//cargo total seleccion, aplico descuentos y multas

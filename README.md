@@ -1,25 +1,25 @@
-# BOOKSMART
+****# BOOKSMART
 
 Este es un Sistema de Gestión de Biblioteca Digital desarrollado en Kotlin usando IntelliJ IDEA.
 
 
 CONTEXTO DEL PROBLEMA
-
+********
 La biblioteca comunitaria **BookSmart** necesita un sistema de consola para gestionar el préstamo de libros y revistas. El sistema debe manejar un catálogo variado de recursos, aplicar reglas de préstamo y devoluciones, calcular multas y beneficios para diferentes tipos de usuarios, simular procesos asíncronos y generar reportes.
 
 OBJETIVO PRINCIPAL
 
 Desarrollar una aplicación de consola en **Kotlin** que permita:
 
-*   Gestionar un catálogo de recursos (libros y revistas).
+- [X] Gestionar un catálogo de recursos (libros y revistas).
 
-*   Procesar préstamos con fechas límite y posibles multas.
+- [ ] Procesar préstamos con fechas límite y posibles multas.
 
-*   Aplicar beneficios y descuentos según el tipo de usuario.
+- [ ] Aplicar beneficios y descuentos según el tipo de usuario.
 
-*   Simular el proceso de préstamo y devolución de manera asíncrona.
+- [ ] Simular el proceso de préstamo y devolución de manera asíncrona.
 
-*   Generar reportes de uso y estadísticas mediante operaciones funcionales.
+- [ ] Generar reportes de uso y estadísticas mediante operaciones funcionales.
 
 
 REQUERIMIENTOS ESPECÍFICOS
@@ -49,22 +49,22 @@ Se debe **simular el tiempo** de búsqueda/preparación de un recurso (delay de 
 
 El sistema debe:
 
-*   Calcular el **subtotal** del préstamo según los recursos elegidos.
+- [ ]   Calcular el **subtotal** del préstamo según los recursos elegidos.
 
-*   Aplicar **descuentos** por tipo de usuario.
+- [ ]   Aplicar **descuentos** por tipo de usuario.
 
-*   Calcular **multas** por devolución tardía.
+- [ ]   Calcular **multas** por devolución tardía.
 
-*   Determinar el **total final a pagar**.
+- [ ]   Determinar el **total final a pagar**.
 
 
 **Reglas mínimas:**
 
-*   Usuarios con membresía “VIP” tienen más días de préstamo.
+- [ ]   Usuarios con membresía “VIP” tienen más días de préstamo.
 
-*   Multa de $500 por día de atraso.
+- [ ]   Multa de $500 por día de atraso.
 
-*   Descuentos:
+- [ ]   Descuentos:
 
     *   Regular: 0%
 
@@ -77,48 +77,48 @@ El sistema debe:
 
 Organizar el código en funciones específicas:
 
-*   inicializarCatalogo()
+- [ ]   inicializarCatalogo()
 
-*   calcularMulta(...)
+- [ ]   calcularMulta(...)
 
-*   aplicarDescuento(...)
+- [ ]   aplicarDescuento(...)
 
-*   procesarPrestamoAsync(...)
+- [ ]   procesarPrestamoAsync(...)
 
-*   El sistema debe usar **colecciones** (List, Map, etc.) para manejar catálogo y préstamos, aplicando operaciones funcionales.
+- [ ]   El sistema debe usar **colecciones** (List, Map, etc.) para manejar catálogo y préstamos, aplicando operaciones funcionales.
 
 
 5) MANEJO DE ERRORES
 
 El sistema debe manejar situaciones como:
 
-*   Precios negativos o datos faltantes.
+- [ ]   Precios negativos o datos faltantes.
 
-*   Intentar devolver un recurso que no fue prestado.
+- [ ]   Intentar devolver un recurso que no fue prestado.
 
 
 ESTRUCTURA TÉCNICA REQUERIDA
 
 **Archivos a crear:**
 
-1.  Main.kt – Punto de entrada.
+- [X] Main.kt – Punto de entrada.
 
-2.  Recurso.kt – Clase base y derivadas.
+- [X] Recurso.kt – Clase base y derivadas.
 
-3.  EstadoPrestamo.kt – Sealed class de estados.
+- [ ] EstadoPrestamo.kt – Sealed class de estados.
 
-4.  GestorBiblioteca.kt – Funciones de negocio.
+- [X] GestorBiblioteca.kt – Funciones de negocio.
 
 
 **Flujo del programa:**
 
-1.  Mostrar catálogo de recursos.
+- [x] Mostrar catálogo de recursos.
 
-2.  Seleccionar recursos para préstamo.
+- [x] Seleccionar recursos para préstamo.
 
-3.  Calcular subtotal, descuentos y multas si corresponde.
+- [ ] Calcular subtotal, descuentos y multas si corresponde.
 
-4.  Procesar préstamo de forma asíncrona.
+- [ ] Procesar préstamo de forma asíncrona.
 
 
 DATOS DE PRUEBA SUGERIDOS
@@ -145,18 +145,11 @@ DATOS DE PRUEBA SUGERIDOS
 
 FUNCIONALIDADES MÍNIMAS OBLIGATORIAS
 
-*   Herencia con clases derivadas.
-
-*   Polimorfismo mediante sobrescritura.
-
-*   Manejo de estados con sealed class.
-
-*   Simulación asíncrona con corrutinas y delay.
-
-*   Uso de colecciones y operaciones funcionales.
-
-*   Lógica condicional para descuentos, multas y reglas.
-
-*   Manejo de errores y validaciones.
-
-*   Código modular y documentado.
+- [X] Herencia con clases derivadas
+- [X] Polimorfismo mediante sobrescritura
+- [ ] Manejo de estados con _sealed class_
+- [ ] Simulación asíncrona con corrutinas y `delay`
+- [ ] Uso de colecciones y operaciones funcionales
+- [X] Lógica condicional para descuentos, multas y reglas
+- [ ] Manejo de errores y validaciones
+- [ ] Código modular y documentado  
