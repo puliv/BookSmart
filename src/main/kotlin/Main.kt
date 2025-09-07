@@ -17,13 +17,11 @@ fun main() {
 
     val tipoUsuario = gestorBiblioteca.obtenerTipoUsuario()
 
-
-
     val subTotalPrestamo = gestorBiblioteca.obtenerSubTotalPrestamo(listaSeleccion, listaRecursos)
-    val descuento = gestorBiblioteca.aplicarDescuentos(tipoUsuario)
+    val descuento = gestorBiblioteca.obtenerDescuento(tipoUsuario, subTotalPrestamo)
     val multa = gestorBiblioteca.fechaLimiteYMulta()
 
-//    gestorBiblioteca.generarVoucherPrestamo(tipoUsuario, subTotalPrestamo, descuento, multa)
+    gestorBiblioteca.generarVoucherPrestamo(tipoUsuario, subTotalPrestamo, descuento, multa, listaSeleccion, listaRecursos)
 }
 
 

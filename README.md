@@ -1,28 +1,25 @@
-****# BOOKSMART
+# BOOKSMART 📚
 
-Este es un Sistema de Gestión de Biblioteca Digital desarrollado en Kotlin usando IntelliJ IDEA.
+## Sistema de Gestión de Biblioteca Digital desarrollado en Kotlin usando IntelliJ IDEA.
 
-
-CONTEXTO DEL PROBLEMA
 ********
+### CONTEXTO DEL PROBLEMA
 La biblioteca comunitaria **BookSmart** necesita un sistema de consola para gestionar el préstamo de libros y revistas. El sistema debe manejar un catálogo variado de recursos, aplicar reglas de préstamo y devoluciones, calcular multas y beneficios para diferentes tipos de usuarios, simular procesos asíncronos y generar reportes.
 
-OBJETIVO PRINCIPAL
+### OBJETIVO PRINCIPAL
 
 Desarrollar una aplicación de consola en **Kotlin** que permita:
 
 - [X] Gestionar un catálogo de recursos (libros y revistas).
 
-- [ ] Procesar préstamos con fechas límite y posibles multas.
+- [x] Procesar préstamos con fechas límite y posibles multas.
 
-- [ ] Aplicar beneficios y descuentos según el tipo de usuario.
+- [x] Aplicar beneficios y descuentos según el tipo de usuario.
 
 - [ ] Simular el proceso de préstamo y devolución de manera asíncrona.
 
-- [ ] Generar reportes de uso y estadísticas mediante operaciones funcionales.
 
-
-REQUERIMIENTOS ESPECÍFICOS
+### REQUERIMIENTOS ESPECÍFICOS
 
 1.- MODELADO DE CLASES
 
@@ -40,7 +37,7 @@ Se requiere **clase base** (Recurso) y **clases derivadas** (Libro, Revista) con
 
 El préstamo pasa por distintos estados representados en una **sealed class**:
 
-*   Pendiente →  Entregado → Error
+*   Pendiente → Entregado → Error
 
 
 Se debe **simular el tiempo** de búsqueda/preparación de un recurso (delay de 3 segundos).
@@ -58,37 +55,22 @@ El sistema debe:
 - [ ]   Determinar el **total final a pagar**.
 
 
-**Reglas mínimas:**
+Reglas mínimas:
 
 - [ ]   Usuarios con membresía “VIP” tienen más días de préstamo.
 
 - [ ]   Multa de $500 por día de atraso.
 
-- [ ]   Descuentos:
+- [ ]   Descuentos por tipo de usuario:
 
-    *   Regular: 0%
+    *   Invitado: 0%
 
     *   Estudiante: 10%
 
     *   VIP: 15%
 
 
-4.- FUNCIONES Y COLECCIONES
-
-Organizar el código en funciones específicas:
-
-- [ ]   inicializarCatalogo()
-
-- [ ]   calcularMulta(...)
-
-- [ ]   aplicarDescuento(...)
-
-- [ ]   procesarPrestamoAsync(...)
-
-- [ ]   El sistema debe usar **colecciones** (List, Map, etc.) para manejar catálogo y préstamos, aplicando operaciones funcionales.
-
-
-5) MANEJO DE ERRORES
+4.- MANEJO DE ERRORES
 
 El sistema debe manejar situaciones como:
 
@@ -97,9 +79,9 @@ El sistema debe manejar situaciones como:
 - [ ]   Intentar devolver un recurso que no fue prestado.
 
 
-ESTRUCTURA TÉCNICA REQUERIDA
+### ESTRUCTURA TÉCNICA REQUERIDA
 
-**Archivos a crear:**
+1.- ARCHIVOS A CREAR
 
 - [X] Main.kt – Punto de entrada.
 
@@ -109,47 +91,43 @@ ESTRUCTURA TÉCNICA REQUERIDA
 
 - [X] GestorBiblioteca.kt – Funciones de negocio.
 
-
-**Flujo del programa:**
+2.- FLUJO DEL PROGRAMA
 
 - [x] Mostrar catálogo de recursos.
 
 - [x] Seleccionar recursos para préstamo.
 
-- [ ] Calcular subtotal, descuentos y multas si corresponde.
+- [x] Calcular subtotal, descuentos y multas si corresponde.
 
 - [ ] Procesar préstamo de forma asíncrona.
 
 
-DATOS DE PRUEBA SUGERIDOS
+3.- FUNCIONALIDADES MINIMAS OBLIGATORIAS
 
-**Catálogo inicial:**
+- [x] Herencia con clases derivadas
+- [x] Polimorfismo mediante sobrescritura
+- [ ] Manejo de estados con _sealed class_
+- [ ] Simulación asíncrona con corrutinas y `delay`
+- [x] Uso de colecciones y operaciones funcionales
+- [x] Lógica condicional para descuentos, multas y reglas
+- [x] Manejo de errores y validaciones
+- [ ] Código modular y documentado
 
-*   **Libro**: “El Principito”, $4.990, nuevo=false
+4.- DATOS DE PRUEBA SUGERIDOS
 
-*   **Libro**: “Cien Años de Soledad”, $9.990, nuevo=true
+Catálogo inicial:
+*   **Libro**: “El Principito”, $4.990, nuevo= `false`
+
+*   **Libro**: “Cien Años de Soledad”, $9.990, nuevo= `true`
 
 *   **Revista**: “National Geographic”, $2.490, mensual
 
 *   **Revista**: “Muy Interesante”, $1.490, semanal
 
 
-**Tipos de usuario:**
-
-*   Regular: 0% descuento
+Tipos de usuario:
+*   Invitado: 0% descuento
 
 *   Estudiante: 10% descuento
 
 *   VIP: 15% descuento
-
-
-FUNCIONALIDADES MÍNIMAS OBLIGATORIAS
-
-- [X] Herencia con clases derivadas
-- [X] Polimorfismo mediante sobrescritura
-- [ ] Manejo de estados con _sealed class_
-- [ ] Simulación asíncrona con corrutinas y `delay`
-- [ ] Uso de colecciones y operaciones funcionales
-- [X] Lógica condicional para descuentos, multas y reglas
-- [ ] Manejo de errores y validaciones
-- [ ] Código modular y documentado  

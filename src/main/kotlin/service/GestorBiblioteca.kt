@@ -4,11 +4,9 @@ import org.example.model.Libro
 import org.example.model.Recurso
 import org.example.model.Revista
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.time.temporal.ChronoUnit
-import java.time.temporal.Temporal
 
 class GestorBiblioteca {
     //Objetivo 1: Gestionar un catálogo de recursos (libros y revistas)
@@ -81,12 +79,13 @@ class GestorBiblioteca {
         }
     }
 
-    fun fechaLimiteYMulta(): Long {
+    //Funcion que permite obtener los dias de retraso en la entrega para calcular multa
+    fun fechaLimiteYMulta(): Int {
         println("---------Ingresa fecha de devolucion---------")
         val formato = DateTimeFormatter.ofPattern("dd-MM-yyyy")
         var fecha: LocalDate? = null
         val hoy: LocalDate = LocalDate.now()
-        var multa: Long = 0
+        var multa = 0
 
         while (fecha == null) {
             println("formato: (dd-mm-aaaa)")
@@ -98,12 +97,12 @@ class GestorBiblioteca {
                 val fechaDespuesDeHoy = fechaIngresada.isAfter(LocalDate.now())
                 val fechaEsHoy = fechaIngresada.isEqual(LocalDate.now())
 
-                if (fechaDespuesDeHoy || fechaEsHoy) {
+                if (fechaEsHoy || fechaDespuesDeHoy) {
                     println("Lo devolviste a tiempo, no tienes multas")
-                }
-                else {
-                    val diferencia = ChronoUnit.DAYS.between(hoy, fechaIngresada)
-                    multa = diferencia * -500
+                } else {
+                    //diferencia al ser una fecha se considera de tipo Long
+                    val diferencia = ChronoUnit.DAYS.between( fechaIngresada, hoy).toInt()
+                    multa = diferencia * 500
                     println("Hubo un retraso de $diferencia dias, lo que significa un recargo de: $multa pesos")
                 }
             }
@@ -112,16 +111,16 @@ class GestorBiblioteca {
     }
 
     //Objetivo 3: Aplicar beneficios y descuentos según el tipo de usuario.
-    fun obtenerTipoUsuario(): Int? {
+    fun obtenerTipoUsuario(): Int {
         println("---------Selecciona tipo de usuario---------")
         println("1.- INVITADO")
         println("2.- ESTUDIANTE")
         println("3.- VIP")
 
-        var tipoUsuario: Int? = null
+        var tipoUsuario = 0
 
         while (tipoUsuario !in 1..3) {
-            tipoUsuario = readln().toIntOrNull()
+            tipoUsuario = readln().toInt()
 
             if (tipoUsuario !in 1..3) {
                 println("Opcion invalida, intenta de nuevo.")
@@ -134,7 +133,6 @@ class GestorBiblioteca {
 
     fun obtenerSubTotalPrestamo(listaSeleccion: MutableList<Int>, listaRecursos: MutableList<Recurso>): Int {
         var subtotal = 0
-        println("---------Total prestamo---------")
 
         listaRecursos.withIndex().forEach { (index, item) ->
             val idx = index + 1
@@ -144,28 +142,55 @@ class GestorBiblioteca {
                 }
             }
         }
-        println("$$subtotal")
         return subtotal
     }
 
-    fun aplicarDescuentos(tipoUsuario: Int?): Int {
+    fun obtenerDescuento(tipoUsuario: Int?, subtotal: Int): Int {
         var descuento = 0
         when (tipoUsuario) {
             1 -> descuento = 0
-            2 -> descuento = 10
-            3 -> descuento = 15
+            2 -> descuento = subtotal * 10 / 100
+            3 -> descuento = subtotal * 15 / 100
         }
         return descuento
     }
 
     //Objetivo 4: Simular el proceso de préstamo y devolución de manera asíncrona.
-    fun generarVoucherPrestamo(tipoUsuario: Int, subTotalPrestamo: Int, descuento: Int, multa: Int): String {
-
-
-        return ""
+    fun generarVoucherPrestamo(
+        tipoUsuario: Int,
+        subTotalPrestamo: Int,
+        descuento: Int,
+        multa: Int,
+        listaSeleccion: MutableList<Int>,
+        listaRecursos: MutableList<Recurso>
+    ) {
+        println("---------Generar prestamo---------")
+        println("--------Items solicitados:--------")
+        listaRecursos.withIndex().forEach { (index, item) ->
+            val idx = index + 1
+            var count = 0
+            for (i in listaSeleccion) {
+                count += 1
+                if (idx == i) {
+                    println("Item $count: ${item.titulo} - $${item.precioBase}")
+                }
+            }
+        }
+        println("-----------------------------")
+        print("Tipo de Usuario: ")
+        when (tipoUsuario) {
+            1 -> println("INVITADO")
+            2 -> println("ESTUDIANTE (Desc 10%)")
+            3 -> println("VIP (Desc 15%)")
+        }
+        println("-----------Totales:------------")
+        println("Subtotal: $$subTotalPrestamo")
+        println("Multa por retraso: $$multa")
+        println("Descuento por membresia: -$$descuento")
+        val total = subTotalPrestamo - descuento + multa
+        println("Total: $$total")
+        println("-----------------------------")
     }
-    //Objetivo 5: Generar reportes de uso y estadísticas mediante operaciones funcionales.
-
 }
 
 
