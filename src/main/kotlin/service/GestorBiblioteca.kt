@@ -1,8 +1,10 @@
 package org.example.service
 
+import kotlinx.coroutines.delay
 import org.example.model.Libro
 import org.example.model.Recurso
 import org.example.model.Revista
+import org.example.util.EstadoPedido
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
@@ -61,11 +63,15 @@ class GestorBiblioteca {
 
     //Objetivo 2: Procesar préstamos con fechas límite y posibles multas.
     fun seleccionRecursos(listaSeleccion: MutableList<Int>) {
-        println("---------Selecciona recursos---------")
+        println("---------Ingresa recursos a devolver---------")
         val seleccionRecurso = readln()
         val arregloSeleccion = seleccionRecurso.split(",")
 
         arregloSeleccion.forEach { s -> listaSeleccion.add(s.toInt()) }
+
+        //Faltar modificar esta funcion para que la listaSeleccion guarde
+        //los items seleccionados con su respectivo index y maneje el
+        //error al ingresar un titulo que no existe
     }
 
     //Validar formato de fecha
@@ -101,9 +107,9 @@ class GestorBiblioteca {
                     println("Lo devolviste a tiempo, no tienes multas")
                 } else {
                     //diferencia al ser una fecha se considera de tipo Long
-                    val diferencia = ChronoUnit.DAYS.between( fechaIngresada, hoy).toInt()
+                    val diferencia = ChronoUnit.DAYS.between(fechaIngresada, hoy).toInt()
                     multa = diferencia * 500
-                    println("Hubo un retraso de $diferencia dias, lo que significa un recargo de: $multa pesos")
+                    println("Hubo un retraso de $diferencia dias, lo que significa un recargo de: $$multa pesos")
                 }
             }
         }
@@ -127,22 +133,29 @@ class GestorBiblioteca {
             }
         }
 
-        println("---------Usuario ingresado con exito---------")
+        println("Usuario ingresado con exito!")
         return tipoUsuario
     }
 
     fun obtenerSubTotalPrestamo(listaSeleccion: MutableList<Int>, listaRecursos: MutableList<Recurso>): Int {
-        var subtotal = 0
+        try {
+            var subtotal = 0
 
-        listaRecursos.withIndex().forEach { (index, item) ->
-            val idx = index + 1
-            listaSeleccion.forEach { i ->
-                if (idx == i) {
-                    subtotal += item.precioBase
+            listaRecursos.withIndex().forEach { (index, item) ->
+                val idx = index + 1
+                listaSeleccion.forEach { i ->
+                    if (idx == i) {
+                        subtotal += item.precioBase
+                    }
                 }
             }
+            EstadoPedido.Exito(mensaje = "Devolucion calculada con exito")
+            return subtotal
+        } catch (e: Exception) {
+            EstadoPedido.Error(mensaje = "Error: devolucion no pudo ser calculada")
+            println("Error")
+            return 0
         }
-        return subtotal
     }
 
     fun obtenerDescuento(tipoUsuario: Int?, subtotal: Int): Int {
@@ -156,7 +169,7 @@ class GestorBiblioteca {
     }
 
     //Objetivo 4: Simular el proceso de préstamo y devolución de manera asíncrona.
-    fun generarVoucherPrestamo(
+    suspend fun generarVoucherPrestamo(
         tipoUsuario: Int,
         subTotalPrestamo: Int,
         descuento: Int,
@@ -164,7 +177,10 @@ class GestorBiblioteca {
         listaSeleccion: MutableList<Int>,
         listaRecursos: MutableList<Recurso>
     ) {
-        println("---------Generar prestamo---------")
+
+        println("Generando voucher de prestamo...")
+        delay(5000)
+
         println("--------Items solicitados:--------")
         listaRecursos.withIndex().forEach { (index, item) ->
             val idx = index + 1
@@ -176,7 +192,7 @@ class GestorBiblioteca {
                 }
             }
         }
-        println("-----------------------------")
+        println("--------------------------------")
         print("Tipo de Usuario: ")
         when (tipoUsuario) {
             1 -> println("INVITADO")
@@ -189,10 +205,8 @@ class GestorBiblioteca {
         println("Descuento por membresia: -$$descuento")
         val total = subTotalPrestamo - descuento + multa
         println("Total: $$total")
-        println("-----------------------------")
+        println("--------------------------------")
+
+        //modificar esta funcion en funciones mas pequeñas
     }
 }
-
-
-//cargo catalogo, lo muestro, usuario selecciona, especifico usuario,
-//cargo total seleccion, aplico descuentos y multas

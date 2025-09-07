@@ -2,7 +2,6 @@
 
 ## Sistema de Gestión de Biblioteca Digital desarrollado en Kotlin usando IntelliJ IDEA.
 
-********
 ### CONTEXTO DEL PROBLEMA
 La biblioteca comunitaria **BookSmart** necesita un sistema de consola para gestionar el préstamo de libros y revistas. El sistema debe manejar un catálogo variado de recursos, aplicar reglas de préstamo y devoluciones, calcular multas y beneficios para diferentes tipos de usuarios, simular procesos asíncronos y generar reportes.
 
@@ -16,7 +15,7 @@ Desarrollar una aplicación de consola en **Kotlin** que permita:
 
 - [x] Aplicar beneficios y descuentos según el tipo de usuario.
 
-- [ ] Simular el proceso de préstamo y devolución de manera asíncrona.
+- [x] Simular el proceso de préstamo y devolución de manera asíncrona.
 
 
 ### REQUERIMIENTOS ESPECÍFICOS
@@ -46,35 +45,29 @@ Se debe **simular el tiempo** de búsqueda/preparación de un recurso (delay de 
 
 El sistema debe:
 
-- [ ]   Calcular el **subtotal** del préstamo según los recursos elegidos.
+- [x]   Calcular el **subtotal** del préstamo según los recursos elegidos.
 
-- [ ]   Aplicar **descuentos** por tipo de usuario.
+- [x]   Aplicar **descuentos** por tipo de usuario.
 
-- [ ]   Calcular **multas** por devolución tardía.
+- [x]   Calcular **multas** por devolución tardía.
 
-- [ ]   Determinar el **total final a pagar**.
+- [x]   Determinar el **total final a pagar**.
 
 
 Reglas mínimas:
 
 - [ ]   Usuarios con membresía “VIP” tienen más días de préstamo.
 
-- [ ]   Multa de $500 por día de atraso.
+- [x]   Multa de $500 por día de atraso.
 
-- [ ]   Descuentos por tipo de usuario:
-
-    *   Invitado: 0%
-
-    *   Estudiante: 10%
-
-    *   VIP: 15%
+- [x]   Descuentos por tipo de usuario.
 
 
 4.- MANEJO DE ERRORES
 
 El sistema debe manejar situaciones como:
 
-- [ ]   Precios negativos o datos faltantes.
+- [x]   Precios negativos o datos faltantes.
 
 - [ ]   Intentar devolver un recurso que no fue prestado.
 
@@ -87,7 +80,7 @@ El sistema debe manejar situaciones como:
 
 - [X] Recurso.kt – Clase base y derivadas.
 
-- [ ] EstadoPrestamo.kt – Sealed class de estados.
+- [x] EstadoPedido.kt – Sealed class de estados.
 
 - [X] GestorBiblioteca.kt – Funciones de negocio.
 
@@ -99,19 +92,19 @@ El sistema debe manejar situaciones como:
 
 - [x] Calcular subtotal, descuentos y multas si corresponde.
 
-- [ ] Procesar préstamo de forma asíncrona.
+- [x] Procesar préstamo de forma asíncrona.
 
 
 3.- FUNCIONALIDADES MINIMAS OBLIGATORIAS
 
 - [x] Herencia con clases derivadas
 - [x] Polimorfismo mediante sobrescritura
-- [ ] Manejo de estados con _sealed class_
-- [ ] Simulación asíncrona con corrutinas y `delay`
+- [x] Manejo de estados con _sealed class_
+- [x] Simulación asíncrona con corrutinas y `delay`
 - [x] Uso de colecciones y operaciones funcionales
 - [x] Lógica condicional para descuentos, multas y reglas
 - [x] Manejo de errores y validaciones
-- [ ] Código modular y documentado
+- [x] Código modular y documentado
 
 4.- DATOS DE PRUEBA SUGERIDOS
 

@@ -1,11 +1,11 @@
 package org.example
 
+import kotlinx.coroutines.runBlocking
 import org.example.model.Recurso
 import org.example.service.GestorBiblioteca
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-fun main() {
+// Runblocking es lo que permite que la funcion se ejecute como una corutina
+fun main(): Unit = runBlocking {
     val listaRecursos = mutableListOf<Recurso>() //catalogo de libros y revistas
     val listaSeleccion = mutableListOf<Int>() //seleccion de recursos por el usuario
 
